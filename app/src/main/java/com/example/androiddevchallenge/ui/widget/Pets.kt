@@ -1,9 +1,30 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.ui.widget
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
@@ -23,7 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.data.Pet
 import com.example.androiddevchallenge.data.PetData
-import com.kyant.pixelmusic.ui.sharedelements.SharedElement
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -33,33 +53,23 @@ fun PetsList(pets: List<Pet>, onPetSelected: (Pet) -> Unit) {
     LazyVerticalGrid(
         state = gridState,
         cells = GridCells.Adaptive(minSize = 128.dp),
-        modifier = Modifier
-            .padding(4.dp)
+        contentPadding = PaddingValues(8.dp)
     ) {
         items(pets) { pet ->
-            SharedElement(
-                pet.name, "pet",
-//                shape = RoundedCornerShape(24.dp * fraction),
-//                transitionSpec = MaterialContainerTransformSpec(
-//                    pathMotionFactory = MaterialArcMotionFactory,
-//                    durationMillis = 600,
-//                    fadeMode = FadeMode.In
-//                ),
-//                onFractionChanged = setFraction
-            ) {
-                PetItem(pet, onPetSelected)
-            }
+            PetItem(pet, onPetSelected)
         }
     }
 }
 
 @Composable
 fun PetItem(pet: Pet, onPetSelected: (Pet) -> Unit) {
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .clickable {
-            onPetSelected(pet)
-        }) {
+    Card(
+        modifier = Modifier
+            .padding(4.dp)
+            .clickable {
+                onPetSelected(pet)
+            }
+    ) {
         Column(
             modifier = Modifier
                 .width(150.dp)
@@ -116,6 +126,5 @@ fun PetItem(pet: Pet, onPetSelected: (Pet) -> Unit) {
 @Composable
 fun PetItemPreview() {
     PetItem(pet = Pet.Cat("Esmeralda", "Siam", 1)) {
-
     }
 }
